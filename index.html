@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>황보정의 소개 페이지</title>
   <style>
     body {
       text-align: center;
       font-family: 'Arial', sans-serif;
       padding-top: 50px;
-      background-color: #f9f9f9;
-      transition: background-color 0.5s ease;
+      background-color: #1e1e1e;
+      color: #f0f0f0;
+      transition: background-color 0.5s ease, color 0.5s ease;
     }
 
     img {
       width: 200px;
       border-radius: 10px;
+      margin-bottom: 20px;
     }
 
     .birthday {
-      background-color: #ffe066;
+      background-color: #3a2e14;
     }
 
     .birthday h1::after {
@@ -28,25 +30,65 @@
 
     .birthday-msg {
       font-size: 1.5em;
-      color: #d9480f;
+      color: #ffd43b;
       margin-top: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 1em;
+      margin-top: 10px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background-color: #4dabf7;
+      color: #fff;
+    }
+
+    button:hover {
+      background-color: #339af0;
+    }
+
+    #time {
+      margin-top: 50px;
+      font-size: 0.9em;
+      color: #ccc;
+    }
+
+    .music {
+      margin-top: 40px;
     }
   </style>
 </head>
 <body>
   <h1>황보정 페이지</h1>
-  <img src="./mainphoto.jpg" alt="황보정 프로필 사진" title="황보정 프로필">
+  <img src="./mainphoto.jpg" alt="황보정 프로필 사진" title="황보정 프로필" />
 
   <h2>🎮 취미: 게임</h2>
+  <button onclick="showHobbies()">취미 더보기</button>
+
   <h3 id="age-text">🧓 나이: 계산 중...</h3>
   <div id="birthday-message" class="birthday-msg"></div>
 
+  <div class="music">
+    <h2>🎵 좋아하는 노래</h2>
+    <p>스윙스 & 에일리 - A Real Man</p>
+    <iframe width="300" height="170"
+      src="https://www.youtube.com/embed/jjg6r6vHOSo?autoplay=1&mute=1&loop=1&playlist=jjg6r6vHOSo"
+      frameborder="0"
+      allow="autoplay; encrypted-media"
+      allowfullscreen>
+    </iframe>
+  </div>
+
+  <div id="time">현재 표준시간: 계산 중...</div>
+
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      // 생년월일 입력 (예: 2001년 3월 15일)
-      const birthYear = 2001;
-      const birthMonth = 3;  // 3월
-      const birthDate = 15;  // 15일
+      // 생년월일 입력
+      const birthYear = 2002;
+      const birthMonth = 4;
+      const birthDate = 26;
 
       const today = new Date();
       const thisYearBirthday = new Date(today.getFullYear(), birthMonth - 1, birthDate);
@@ -54,25 +96,46 @@
       // 나이 계산
       let age = today.getFullYear() - birthYear;
       if (today < thisYearBirthday) {
-        age--; // 아직 생일 안 지났으면 한 살 빼기
+        age--;
       }
 
-      // 나이 표시
-      const ageText = document.getElementById("age-text");
-      ageText.textContent = `🧓 나이: ${age}세`;
+      document.getElementById("age-text").textContent = `🧓 나이: ${age}세`;
 
       // 생일 여부 확인
-      if (
-        today.getMonth() === (birthMonth - 1) &&
-        today.getDate() === birthDate
-      ) {
-        // 생일이면 화면 꾸미기
+      if (today.getMonth() === (birthMonth - 1) && today.getDate() === birthDate) {
         document.body.classList.add("birthday");
-
-        const msg = document.getElementById("birthday-message");
-        msg.textContent = "🎉 생일 축하합니다, 황보정님! 🎉";
+        document.getElementById("birthday-message").textContent = "🎉 생일 축하합니다, 황보정님! 🎉";
       }
+
+      // 시간 표시
+      updateTime();
+      setInterval(updateTime, 1000);
     });
+
+    function updateTime() {
+      const now = new Date();
+      const koreaTime = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Seoul" }));
+      const formatted = koreaTime.toLocaleString('ko-KR');
+      document.getElementById("time").textContent = `현재 표준시간: ${formatted}`;
+    }
+
+    function showHobbies() {
+      const hobbyList = `
+        <html>
+          <head><title>황보정의 취미</title></head>
+          <body style="font-family: sans-serif; background-color: #f0f0f0; text-align: center; padding-top: 30px;">
+            <h2>황보정님의 취미 목록 🎮</h2>
+            <ul style="list-style: none; font-size: 1.2em;">
+              <li>🎮 게임 (PC, 콘솔, 모바일)</li>
+              <li>🎧 음악 감상</li>
+              <li>📚 책 읽기</li>
+            </ul>
+          </body>
+        </html>
+      `;
+      const newWin = window.open("", "_blank", "width=400,height=400");
+      newWin.document.write(hobbyList);
+    }
   </script>
 </body>
 </html>
