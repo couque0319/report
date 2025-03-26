@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>황보정의 소개 페이지</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: 'Arial', sans-serif;
+      padding-top: 50px;
+      background-color: #f9f9f9;
+      transition: background-color 0.5s ease;
+    }
+
+    img {
+      width: 200px;
+      border-radius: 10px;
+    }
+
+    .birthday {
+      background-color: #ffe066;
+    }
+
+    .birthday h1::after {
+      content: " 🎉🎂";
+    }
+
+    .birthday-msg {
+      font-size: 1.5em;
+      color: #d9480f;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>황보정 페이지</h1>
+  <img src="./예비용_사진.png" alt="황보정 프로필 사진" title="황보정 프로필">
+
+  <h2>🎮 취미: 게임</h2>
+  <h3 id="age-text">🧓 나이: 계산 중...</h3>
+  <div id="birthday-message" class="birthday-msg"></div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // 생년월일 입력 (예: 2001년 3월 15일)
+      const birthYear = 2001;
+      const birthMonth = 3;  // 3월
+      const birthDate = 15;  // 15일
+
+      const today = new Date();
+      const thisYearBirthday = new Date(today.getFullYear(), birthMonth - 1, birthDate);
+
+      // 나이 계산
+      let age = today.getFullYear() - birthYear;
+      if (today < thisYearBirthday) {
+        age--; // 아직 생일 안 지났으면 한 살 빼기
+      }
+
+      // 나이 표시
+      const ageText = document.getElementById("age-text");
+      ageText.textContent = `🧓 나이: ${age}세`;
+
+      // 생일 여부 확인
+      if (
+        today.getMonth() === (birthMonth - 1) &&
+        today.getDate() === birthDate
+      ) {
+        // 생일이면 화면 꾸미기
+        document.body.classList.add("birthday");
+
+        const msg = document.getElementById("birthday-message");
+        msg.textContent = "🎉 생일 축하합니다, 황보정님! 🎉";
+      }
+    });
+  </script>
+</body>
+</html>
