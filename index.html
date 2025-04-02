@@ -58,34 +58,52 @@
     .music {
       margin-top: 40px;
     }
+
+    .hidden {
+      display: none;
+    }
   </style>
 </head>
 <body>
-  <h1>황보정 페이지</h1>
-  <img src="./mainphoto.jpg" alt="황보정 프로필 사진" title="황보정 프로필" />
+  <!-- 소개 화면 -->
+  <div id="intro-section">
+    <h1>황보정 페이지</h1>
+    <img src="./mainphoto.jpg" alt="황보정 프로필 사진" title="황보정 프로필" />
 
-  <h2>🎮 취미: 게임</h2>
-  <button onclick="showHobbies()">취미 더보기</button>
+    <h2>🎮 취미: 게임</h2>
+    <button onclick="showHobbySection()">취미 더보기</button>
 
-  <h3 id="age-text">🧓 나이: 계산 중...</h3>
-  <div id="birthday-message" class="birthday-msg"></div>
+    <h3 id="age-text">🧓 나이: 계산 중...</h3>
+    <div id="birthday-message" class="birthday-msg"></div>
 
-  <div class="music">
-    <h2>🎵 좋아하는 노래</h2>
-    <p>스윙스 & 에일리 - A Real Man</p>
-    <iframe width="300" height="170"
-      src="https://www.youtube.com/embed/jjg6r6vHOSo?autoplay=1&mute=1&loop=1&playlist=jjg6r6vHOSo"
-      frameborder="0"
-      allow="autoplay; encrypted-media"
-      allowfullscreen>
-    </iframe>
+    <div class="music">
+      <h2>🎵 좋아하는 노래</h2>
+      <p>스윙스 & 에일리 - A Real Man</p>
+      <iframe width="300" height="170"
+        src="https://www.youtube.com/embed/jjg6r6vHOSo?autoplay=1&mute=1&loop=1&playlist=jjg6r6vHOSo"
+        frameborder="0"
+        allow="autoplay; encrypted-media"
+        allowfullscreen>
+      </iframe>
+    </div>
+
+    <div id="time">현재 표준시간: 계산 중...</div>
   </div>
 
-  <div id="time">현재 표준시간: 계산 중...</div>
+  <!-- 취미 화면 -->
+  <div id="hobby-section" class="hidden">
+    <h2>황보정님의 취미 목록 🎮</h2>
+    <ul style="list-style: none; font-size: 1.2em;">
+      <li>🎮 게임 (PC, 콘솔, 모바일)</li>
+      <li>🎧 음악 감상</li>
+      <li>📚 책 읽기</li>
+      <li>🎨 그림 그리기</li>
+    </ul>
+    <button onclick="goBack()">🔙 돌아가기</button>
+  </div>
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      // 생년월일 입력
       const birthYear = 2002;
       const birthMonth = 4;
       const birthDate = 26;
@@ -93,7 +111,6 @@
       const today = new Date();
       const thisYearBirthday = new Date(today.getFullYear(), birthMonth - 1, birthDate);
 
-      // 나이 계산
       let age = today.getFullYear() - birthYear;
       if (today < thisYearBirthday) {
         age--;
@@ -101,13 +118,11 @@
 
       document.getElementById("age-text").textContent = `🧓 나이: ${age}세`;
 
-      // 생일 여부 확인
       if (today.getMonth() === (birthMonth - 1) && today.getDate() === birthDate) {
         document.body.classList.add("birthday");
         document.getElementById("birthday-message").textContent = "🎉 생일 축하합니다, 황보정님! 🎉";
       }
 
-      // 시간 표시
       updateTime();
       setInterval(updateTime, 1000);
     });
@@ -119,22 +134,14 @@
       document.getElementById("time").textContent = `현재 표준시간: ${formatted}`;
     }
 
-    function showHobbies() {
-      const hobbyList = `
-        <html>
-          <head><title>황보정의 취미</title></head>
-          <body style="font-family: sans-serif; background-color: #f0f0f0; text-align: center; padding-top: 30px;">
-            <h2>황보정님의 취미 목록 🎮</h2>
-            <ul style="list-style: none; font-size: 1.2em;">
-              <li>🎮 게임 (PC, 콘솔, 모바일)</li>
-              <li>🎧 음악 감상</li>
-              <li>📚 책 읽기</li>
-            </ul>
-          </body>
-        </html>
-      `;
-      const newWin = window.open("", "_blank", "width=400,height=400");
-      newWin.document.write(hobbyList);
+    function showHobbySection() {
+      document.getElementById("intro-section").classList.add("hidden");
+      document.getElementById("hobby-section").classList.remove("hidden");
+    }
+
+    function goBack() {
+      document.getElementById("hobby-section").classList.add("hidden");
+      document.getElementById("intro-section").classList.remove("hidden");
     }
   </script>
 </body>
