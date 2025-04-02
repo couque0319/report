@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>책 리스트 정리</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    input {
+      padding: 8px;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 8px 16px;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 8px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h1>📚 책 리스트 정리</h1>
+
+  <div>
+    <input type="text" id="title" placeholder="책 제목" />
+    <input type="text" id="author" placeholder="저자" />
+    <button onclick="addBook()">추가</button>
+  </div>
+
+  <ul id="bookList"></ul>
+
+  <script>
+    function addBook() {
+      const title = document.getElementById('title').value.trim();
+      const author = document.getElementById('author').value.trim();
+
+      if (!title || !author) return;
+
+      const li = document.createElement('li');
+      li.textContent = `📖 ${title} - ${author}`;
+      document.getElementById('bookList').appendChild(li);
+
+      document.getElementById('title').value = '';
+      document.getElementById('author').value = '';
+    }
+  </script>
+</body>
+</html>
